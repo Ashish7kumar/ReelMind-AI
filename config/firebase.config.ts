@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-"use clinet"
+"use client"
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getAuth} from 'firebase/auth'
@@ -10,11 +10,11 @@ import {getAuth} from 'firebase/auth'
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: "reelmind-ai.firebaseapp.com",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_DOMAIN,
   projectId: "reelmind-ai",
   storageBucket: "reelmind-ai.firebasestorage.app",
   messagingSenderId: "188497296874",
-  appId: "1:188497296874:web:22d345981363e0b55c4693",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: "G-9091PDB1C3"
 };
 

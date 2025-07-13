@@ -1,8 +1,12 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import Authentication from './Authentication'
+import { useAuthContext } from '@/app/themeProvider'
+import Link from 'next/link'
 const Header = () => {
+  const {user}=useAuthContext();
   return (
     <div className='p-4 flex item-center justify-between
 
@@ -15,9 +19,15 @@ const Header = () => {
 
     </div>
     <div>
+      { !user ?
       <Authentication>
       <Button   className="bg-[#7C3AED] hover:bg-[#6b2edc] text-white"  >Get Started</Button>
-       </Authentication>
+       </Authentication>:
+      <div className='flex items-center gap-3'>
+        <Link href={'/dashboard'}>
+          <Button>Dashboard</Button></Link>
+          <Image src={user?.photoUrl} alt='Profile picture' width={40} height={40} className='rounded-full'/>
+        </div>}
     </div>
     </div>
   )
