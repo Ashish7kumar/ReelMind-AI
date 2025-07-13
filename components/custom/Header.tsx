@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Button } from '../ui/button'
+import Authentication from './Authentication'
 const Header = () => {
   return (
     <div className='p-4 flex item-center justify-between
@@ -14,7 +15,9 @@ const Header = () => {
 
     </div>
     <div>
+      <Authentication>
       <Button   className="bg-[#7C3AED] hover:bg-[#6b2edc] text-white"  >Get Started</Button>
+       </Authentication>
     </div>
     </div>
   )

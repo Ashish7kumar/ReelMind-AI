@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Button } from '../ui/button'
+import Authentication from './Authentication'
 const Hero = () => {
   return (
   <div className="p-10 flex flex-col items-center justify-center text-center md:px-20 lg:px-36 xl:px-48">
@@ -19,7 +20,10 @@ const Hero = () => {
 >
   Explore
 </Button>
+
+       <Authentication>
       <Button  size="lg" className="bg-[#7C3AED] hover:bg-[#6b2edc] text-white">Start Creating</Button>
+      </Authentication>
   </div>
 <div className="relative pt-10 max-h-[800px] overflow-hidden">
   <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none"></div>
