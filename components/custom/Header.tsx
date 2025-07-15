@@ -7,6 +7,7 @@ import { useAuthContext } from '@/app/themeProvider'
 import Link from 'next/link'
 const Header = () => {
   const {user}=useAuthContext();
+  
   return (
     <div className='p-4 flex item-center justify-between
 

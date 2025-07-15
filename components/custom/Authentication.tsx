@@ -16,7 +16,7 @@ const Authentication = ({ children }: { children: ReactNode }) => {
         
         }
         const user = result.user;
-        console.log("User signed in:", user);
+        
       })
       .catch((error) => {
         const errorCode = error.code;
