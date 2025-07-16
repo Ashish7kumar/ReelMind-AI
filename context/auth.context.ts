@@ -1,5 +1,3 @@
 import { createContext,useState } from "react";
-interface AuthContextType {
-  user: any;
-}
-export const AuthContext=createContext<AuthContextType | undefined>(undefined);
+import AuthContextType from "@/types/authContext.type";
+export const AuthContext=createContext<AuthContextType | null>(null);

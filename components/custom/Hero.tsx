@@ -16,13 +16,14 @@ const Hero = () => {
 <Button
   size="lg"
   variant="secondary"
-  className="hover:shadow-lg transition-shadow duration-300"
+ className=" px-5 py-2 rounded-xl text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer"
 >
   Explore
 </Button>
 
        <Authentication>
-      <Button  size="lg" className="bg-[#7C3AED] hover:bg-[#6b2edc] text-white">Start Creating</Button>
+      <Button  size="lg" className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 cursor-pointer"
+>Start Creating</Button>
       </Authentication>
   </div>
 <div className="relative pt-10 max-h-[800px] overflow-hidden">

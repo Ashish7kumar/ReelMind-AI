@@ -6,10 +6,15 @@ import Authentication from './Authentication'
 import { useAuthContext } from '@/app/themeProvider'
 import Link from 'next/link'
 const Header = () => {
-  const {user}=useAuthContext();
   
+  const context=useAuthContext();
+  if(context === null)
+  {
+    throw Error('No user context')
+  }
+  const {user}=context;
   return (
-    <div className='p-4 flex item-center justify-between
+    <div className='p-4 flex items-center justify-between
 
     '>
     <div className='flex items-center gap-3'>
@@ -22,12 +27,19 @@ const Header = () => {
     <div>
       { !user ?
       <Authentication>
-      <Button   className="bg-[#7C3AED] hover:bg-[#6b2edc] text-white"  >Get Started</Button>
+      <Button
+  className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 cursor-pointer"
+>
+  Get Started
+</Button>
+
        </Authentication>:
       <div className='flex items-center gap-3'>
         <Link href={'/dashboard'}>
-          <Button>Dashboard</Button></Link>
-          <Image src={user?.photoUrl} alt='Profile picture' width={40} height={40} className='rounded-full'/>
+          <Button className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 cursor-pointer"
+>Dashboard</Button></Link>
+          
+          <Image src={user?.photoURL || '/default_user.png'} alt='Profile picture' width={40} height={40} className='rounded-full'/>
         </div>}
     </div>
     </div>
