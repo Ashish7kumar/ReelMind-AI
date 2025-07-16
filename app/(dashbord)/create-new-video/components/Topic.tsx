@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { SparkleIcon } from 'lucide-react'
+import { Loader2Icon, SparkleIcon } from 'lucide-react'
+import axios from 'axios'
 const suggestions = [
   "Science Experiments",
   "Kids Story",
@@ -19,10 +20,22 @@ const suggestions = [
   "Tech Breakthroughs",
   "Horror Stories"
 ];
+
 function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, value: any) => void }) {
     const [selectedTopic,setSelectedTopic]=useState<string| null>(null)
-  const GenerateScript=()=>{
-
+  const [script,setScript]=useState<any[]>();
+  const [loading,setLoading]=useState(false);
+    const GenerateScript=async()=>{
+        setLoading(true)
+        try{
+   const result=await axios.post('/api/generated-script',{
+       topic:selectedTopic
+   });
+   console.log(result.data);
+   setScript(result.data?.scripts);}
+   catch(e){console.log(e)}
+   finally{
+   setLoading(false);}
   }
     return (
     <div>
@@ -62,8 +75,20 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
     </div>
   </TabsContent>
 </Tabs>
+   <div>
+    {script?.length! > 0 && 
+  <div className='grid grid-cols-2 gap-5'>
+    {script?.map((item,index) => (
+      <div key={index} className='p-3 border rounded-lg mt-3'>
+        <h2 className=''line-clamp-4 text-sm text-gray-300>{item.content}</h2>
+      </div>
+    ))}
+  </div>
+}
+
+   </div>
         </div>
-        <Button className='mt-3' size="sm" onClick={GenerateScript}><SparkleIcon/>Generate Script</Button>
+        <Button className='mt-3' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Script</Button>
         </div>
   )
 }
