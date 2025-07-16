@@ -12,18 +12,24 @@ import AuthContextType from '@/types/authContext.type'
 
 
 const Provider = ({children}:{ children: React.ReactNode }) => {
-  const [user,setUser]=useState<any>();
+  const [user,setUser]=useState<any>(null);
+  const [convexUser, setConvexUser] = useState<any>(null);
   const CreateUser=useMutation(api.user.CreateNewUser);
   useEffect(()=>{
    const unsubscribe=onAuthStateChanged(auth,async (user)=>{
-   if(user)
+   console.log(user);
+   setUser(user);
+    if(user)
    {
-    setUser(user);
+
+    
   const result=await CreateUser({
   name: user.displayName ?? "Anonymous",
   email: user.email ?? "no-email@example.com",
   pictureURL: user.photoURL ?? ""
-})
+});
+console.log(result);
+setUser(result);
 
 
 
@@ -34,17 +40,17 @@ const Provider = ({children}:{ children: React.ReactNode }) => {
   return (
     
     <div className="min-h-screen bg-white text-	#6C5CE7">
-      <AuthContext.Provider  value={{user}}>
-     <NextThemesProvider
-     attribute="class"
+     <AuthContext.Provider value={{ user, convexUser }}>
+  <NextThemesProvider
+    attribute="class"
     defaultTheme="light"
     enableSystem
-    disableTransitionOnChange 
-    
-     >
-     {children}
-     </NextThemesProvider> 
-     </AuthContext.Provider>
+    disableTransitionOnChange
+  >
+    {children}
+  </NextThemesProvider>
+</AuthContext.Provider>
+
     </div>
 
   )

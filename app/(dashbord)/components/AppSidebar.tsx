@@ -11,8 +11,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { SidebarGroupContent ,SidebarMenu} from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { HomeIcon, LucideFileVideo, Search, WalletCards } from "lucide-react"
+import { Gem, HomeIcon, LucideFileVideo, Search, WalletCards } from "lucide-react"
 import { title } from "process"
+import { usePathname } from "next/navigation"
+import { useAuthContext } from "@/app/themeProvider"
 const sidebarItems=[
     {
         title:'Home',
@@ -36,8 +38,18 @@ const sidebarItems=[
     }
 ]
 export function AppSidebar() {
+    const context=useAuthContext();
+    if(!context)
+    {
+        throw Error('No Context');
+    }
+    const {user}=context;
+    const path=usePathname();
   return (
-    <Sidebar className="bg-purple-700">
+   <Sidebar
+  
+>
+
       <SidebarHeader>
         <div>
         <div className="flex items-center gap-3 w-full mt-5">
@@ -50,7 +62,7 @@ export function AppSidebar() {
     className="rounded-md"
   />
   <h2 className="text-3xl font-extrabold tracking-tight text-[#333333] font-sans">
-    ReelMind <span className="text-purple-500">AI</span>
+    ReelMind <span className="text-purple-700">AI</span>
   </h2>
   
 </div>
@@ -61,25 +73,42 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroupContent>
         <SidebarGroup />
-        <div className="mx-5 mt-8">
-            <Button className="w-full">Create New Video</Button>
+        <div className="mx-3 mt-8">
+            <Button className="w-full bg-purple-500 hover:bg-purple-700">Create New Video</Button>
         </div>
         <SidebarMenu >
           {sidebarItems.map((menu)=>(
-             <SidebarMenuItem key={menu.url} className="mt-3">
-                <SidebarMenuButton className="p-5">
-                <Link href={menu?.url} className="flex items-center gap-4 p-3">
-                <menu.icon/>
-                
-                <span>{menu.title}</span></Link>
-            </SidebarMenuButton>
-             </SidebarMenuItem>
+            <SidebarMenuItem key={menu.url} className="mt-2 mx-3">
+  <SidebarMenuButton
+    isActive={menu.url === path}
+    className={`p-5 rounded-md flex items-center gap-4 transition-colors duration-200 ${
+      menu.url === path
+        ? "!bg-purple-200 !text-purple-700"
+        : "hover:text-purple-700 hover:bg-violet-100 text-black"
+    }`}
+  >
+    <Link href={menu.url} className="flex items-center gap-4 w-full">
+      <menu.icon className="w-5 h-5" />
+      <span className="text-inherit">{menu.title}</span>
+    </Link>
+  </SidebarMenuButton>
+</SidebarMenuItem>
+
           ))}
         </SidebarMenu>
 </SidebarGroupContent>
         <SidebarGroup />
       </SidebarContent> 
-      <SidebarFooter />
+      <SidebarFooter>
+        <div className='p-5 border rounded-lg mb-6 bg-purple-500 text-white'>
+            <div className="flex items-center justify-between">
+            <Gem/>
+            <h2>{user?.credits} Credit{user?.credits >= 1 ? 's' : ''} Left</h2>
+
+            </div>
+            <Button className="w-full mt-3 bg-white text-black hover:text-purple-500 hover:bg-purple-100 cursor-pointer">Buy More Credits</Button>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   )
 }

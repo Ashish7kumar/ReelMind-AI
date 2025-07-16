@@ -39,7 +39,7 @@ const Header = () => {
           <Button className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 cursor-pointer"
 >Dashboard</Button></Link>
           
-          <Image src={user?.photoURL || '/default_user.png'} alt='Profile picture' width={40} height={40} className='rounded-full'/>
+          <Image src={user?.pictureURL || '/default_user.png'} alt='Profile picture' width={40} height={40} className='rounded-full'/>
         </div>}
     </div>
     </div>
