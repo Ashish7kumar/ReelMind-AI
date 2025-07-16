@@ -74,7 +74,9 @@ export function AppSidebar() {
         <SidebarGroupContent>
         <SidebarGroup />
         <div className="mx-3 mt-8">
-            <Button className="w-full bg-purple-500 hover:bg-purple-700">Create New Video</Button>
+            <Link href={'/create-new-video'}>
+            <Button className="w-full bg-purple-500 hover:bg-purple-700 cursor-pointer">Create New Video</Button>
+        </Link>
         </div>
         <SidebarMenu >
           {sidebarItems.map((menu)=>(
