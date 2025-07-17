@@ -22,7 +22,8 @@ const suggestions = [
 ];
 
 function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, value: any) => void }) {
-    const [selectedTopic,setSelectedTopic]=useState<string| null>(null)
+    const [selectedTopic,setSelectedTopic]=useState<string| null>(null);
+    const [selectedScriptIndex,setSelectedScriptIndex]=useState<number |null>();
   const [script,setScript]=useState<any[]>();
   const [loading,setLoading]=useState(false);
     const GenerateScript=async()=>{
@@ -46,20 +47,20 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
         <h2>Video Topic</h2>
         <p>Select topic for your video</p>
         <Tabs defaultValue="suggestion" className="w-full mt-2">
-  <TabsList>
-    <TabsTrigger value="suggestion">Suggestions</TabsTrigger>
+  <TabsList className='cursor-pointer'>
+    <TabsTrigger value="suggestion" >Suggestions</TabsTrigger>
     <TabsTrigger value="your_topic">Your Topic</TabsTrigger>
   </TabsList>
   <TabsContent value="suggestion">
   <div className="flex flex-wrap gap-2 mt-4">
     {suggestions.map((suggestion) => (
-      <Button
+      <Button 
         variant="outline"
         key={suggestion}
         onClick={() => {setSelectedTopic(suggestion)
             onHandleInputChange('topic',suggestion)
         }}
-        className={`m-1 ${
+        className={`m-1  cursor-pointer ${
           suggestion === selectedTopic ? "bg-purple-100" : ""
         }`}
       >
@@ -75,20 +76,25 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
     </div>
   </TabsContent>
 </Tabs>
-   <div>
+    <div>
+    
     {script?.length! > 0 && 
-  <div className='grid grid-cols-2 gap-5'>
+    <div className='mt-3'>
+        <h2>Select the Script</h2>
+  <div className='grid grid-cols-2 gap-5 mt-1'>
     {script?.map((item,index) => (
-      <div key={index} className='p-3 border rounded-lg mt-3'>
-        <h2 className=''line-clamp-4 text-sm text-gray-300>{item.content}</h2>
+      <div key={index} className={`p-3 border rounded-lg cursor-pointer ${selectedScriptIndex===index && 'bg-purple-100 border-black'}`} onClick={()=>setSelectedScriptIndex(index)}>
+        <h2 className='line-clamp-6 text-sm text-black overflow-scroll overflow-x-hidden'>{item.content}</h2>
       </div>
     ))}
+  </div>
   </div>
 }
 
    </div>
         </div>
-        <Button className='mt-3' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Script</Button>
+      { !script ? <Button className='mt-3 bg-purple-500 hover:bg-purple-700 cursor-pointer' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Script</Button>: 
+      <Button className='mt-3 bg-purple-500 hover:bg-purple-700 cursor-pointer' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Another Script</Button>}
         </div>
   )
 }

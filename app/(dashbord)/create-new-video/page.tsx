@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Topic from '@/app/(dashbord)/create-new-video/components/Topic'
+import VideoStyle from './components/VideoStyle'
 const CreateNewVideo = () => {
     const [formData,setFormData]=useState<any>();
    const onHandleInputChange = (fieldName: string, fieldValue: any) => {
@@ -17,6 +18,7 @@ const CreateNewVideo = () => {
 <div className='grid grid-cols-1 md:grid-cols-3 mt-8'>
   <div className='col-span-2 p-7 border rounded-xl'>
      <Topic onHandleInputChange={onHandleInputChange}/>
+     <VideoStyle onHandleInputChange={onHandleInputChange}/>
   </div>
 <div>
 
