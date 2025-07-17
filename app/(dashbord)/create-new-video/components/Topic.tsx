@@ -83,7 +83,11 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
         <h2>Select the Script</h2>
   <div className='grid grid-cols-2 gap-5 mt-1'>
     {script?.map((item,index) => (
-      <div key={index} className={`p-3 border rounded-lg cursor-pointer ${selectedScriptIndex===index && 'bg-purple-100 border-black'}`} onClick={()=>setSelectedScriptIndex(index)}>
+      <div key={index} className={`p-3 border rounded-lg cursor-pointer ${selectedScriptIndex===index && 'bg-purple-100 border-black'}`} 
+     onClick={() => {
+      setSelectedScriptIndex(index);
+      onHandleInputChange('script', item.content);
+    }}>
         <h2 className='line-clamp-6 text-sm text-black overflow-scroll overflow-x-hidden'>{item.content}</h2>
       </div>
     ))}
@@ -94,7 +98,7 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
    </div>
         </div>
       { !script ? <Button className='mt-3 bg-purple-500 hover:bg-purple-700 cursor-pointer' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Script</Button>: 
-      <Button className='mt-3 bg-purple-500 hover:bg-purple-700 cursor-pointer' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Another Script</Button>}
+      <Button className='mt-3' size="sm" disabled={loading} onClick={GenerateScript}>{loading ?<Loader2Icon className='animate-spin'/>:<SparkleIcon/>}Generate Another Script</Button>}
         </div>
   )
 }
