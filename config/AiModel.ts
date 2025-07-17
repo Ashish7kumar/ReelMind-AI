@@ -25,21 +25,7 @@ export const GenerateScript = model.startChat({
       role: "user",
       parts: [
         {
-          text: `Write a two different script for 30 Seconds video on Topic: {topic}
-
-Give me response in JSON format and follow the schema:
-
-json
-{
-  scripts: [
-    {
-      content: ""
-    },
-    {
-      content: ""
-    }
-  ]
-}`,
+          text: `Write two different scripts for a 30-second video on the topic: {topic}. Only include the spoken  lines. Do not include any descriptions, camera directions, scene transitions, or bracketed notes. Return the response in the following JSON format:\n\n{\n  \"scripts\": [\n    {\n      \"content\": \"\"\n    },\n    {\n      \"content\": \"\"\n    }\n  ]\n}`,
         },
       ],
     },
