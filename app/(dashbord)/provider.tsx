@@ -30,7 +30,7 @@ const DasboardProvider = ({children}:{children:React.ReactNode}) => {
 
       <AppSidebar/>
       <div className='w-full'><AppHeader/>
-      <div className='p-10'>
+      <div className='p-10' >
         {children}</div></div>
     
     
