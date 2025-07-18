@@ -50,7 +50,8 @@ if (!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?
     })
    
     const result=await axios.post('/api/generate-video',{
-      ...formData
+      ...formData,
+      recordId:resp
     });
     console.log(result);
     setLoading(false)
