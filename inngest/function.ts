@@ -2,6 +2,18 @@ import VideoStyle from "@/app/(dashbord)/create-new-video/components/VideoStyle"
 import { inngest } from "./client";
 import axios from "axios";
 import {createClient} from '@deepgram/sdk'
+import { GenerateImageScript } from "@/config/AiModel";
+const ImagePromptScript = `Generate Image prompt of {style} style with all deatils for each scene for 30 seconds video:script:{script}
+- Just Give specifying image prompt depends on the story line
+- do not give camera angle image prompt
+- Follow the Following schema and return JSON data (Max 4-5 Images)
+[
+  {
+    imagePrompt: '',
+    sceneContent: '<Script Content>'
+  }
+]`
+
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },
   { event: "test/hello.world" },
@@ -56,9 +68,20 @@ export const GenerateVideoData=inngest.createFunction(
         return result.results.channels[0].alternatives[0].words;
             
             }
-        
+          
     )  
-    return GenerateCaptions
+      const GenerateImagePrompts=await step.run(
+                "generateImagePrompt",
+                async()=>{
+                  const FINAL_PROMPT=ImagePromptScript.replace('{style}',VideoStyle).replace('{script}',script);
+                   const result=await GenerateImageScript.sendMessage(FINAL_PROMPT);
+                   const resp=JSON.parse(result.response.text());
+                   return resp;
+                }
+            )
+            console.log(GenerateImagePrompts);
+        
+    return GenerateImagePrompts
     }
     
 )
