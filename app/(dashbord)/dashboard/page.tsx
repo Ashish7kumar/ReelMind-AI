@@ -1,8 +1,13 @@
 import React from 'react'
+import VideoList from './components/VideoList'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div><h2 className='font-bold text-3xl'>
+      My Videos
+      </h2>
+      <VideoList/>
+      </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server"
+import { mutation,query } from "./_generated/server"
 import {v} from "convex/values"
 export const CreateVideoData=mutation(
     {
@@ -10,7 +10,8 @@ export const CreateVideoData=mutation(
                 caption:v.any(),
                 voice:v.string(),
                 uid:v.id('users'),
-                    createdBy:v.string()
+                    createdBy:v.string(),
+                    credits:v.number()
         },
         handler:async(ctx,args)=>{
             const result=await ctx.db.insert('videoData',{
@@ -24,6 +25,10 @@ export const CreateVideoData=mutation(
               createdBy:args.createdBy,
               status:"pending"
             })
+            await ctx.db.patch(args.uid,{
+                credits:(args?.credits)-1
+            })
+            
             return result
         }
     }
@@ -44,4 +49,25 @@ export const UpdateVideoRecord=mutation({
         });
         return result
     }
+})
+export const getUserVideoes=query({
+    args:{
+        uid:v.id('users')
+    },
+    handler:async(ctx:any,args:any)=>{
+        const result=await ctx.db.query('videoData')
+        .filter((q:any)=>q.eq(q.field('uid'),args.uid))
+        .order('desc')
+        .collect();
+        return result;
+    }
+})
+export const GetVideoById=query({
+  args:{
+    videoId:v.id('videoData')
+  },
+  handler:async(ctx,args)=>{
+    const result=await ctx.db.get(args.videoId);
+    return result;
+  }
 })

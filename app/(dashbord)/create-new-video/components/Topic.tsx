@@ -5,7 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Loader2Icon, SparkleIcon } from 'lucide-react'
+import toast from 'react-hot-toast'
 import axios from 'axios'
+import { useAuthContext } from '@/app/themeProvider'
 const suggestions = [
   "Science Experiments",
   "Kids Story",
@@ -26,7 +28,18 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
     const [selectedScriptIndex,setSelectedScriptIndex]=useState<number |null>();
   const [script,setScript]=useState<any[]>();
   const [loading,setLoading]=useState(false);
-    const GenerateScript=async()=>{
+  const context=useAuthContext();
+    if(context === null)
+    {
+      throw Error('No user context')
+    }
+    const {user}=context;  
+  const GenerateScript=async()=>{
+       if(user?.credits<=0)
+    {
+      toast('Insufficent Credits,plese add more credits')
+      return 
+    }
         setLoading(true)
         try{
    const result=await axios.post('/api/generated-script',{
@@ -44,7 +57,7 @@ function Topic({ onHandleInputChange }: { onHandleInputChange: (field: string, v
             </h2>
             <Input placeholder="Enter Project Title" onChange={(event)=>onHandleInputChange("title",event?.target.value)}/>
        <div className='mt-5'>
-        <h2>Video Topic</h2>
+        <div>Video Topic</div>
         <p>Select topic for your video</p>
         <Tabs defaultValue="suggestion" className="w-full mt-2">
   <TabsList className='cursor-pointer'>

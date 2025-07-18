@@ -11,7 +11,7 @@ import Preview from './components/Preview'
 import { useMutation } from 'convex/react'
 import { useAuthContext } from '@/app/themeProvider'
 import { api } from '@/convex/_generated/api'
-
+import { toast } from 'react-hot-toast';
 const CreateNewVideo = () => {
   
   const [loading,setLoading]=useState(false);
@@ -31,13 +31,19 @@ const CreateNewVideo = () => {
     console.log(formData);
   };
    const GenerateVideo=async ()=>{
-    setLoading(true);
+    if(user?.credits<=0)
+    {
+      toast('Insufficent Credits,plese add more credits')
+      return 
+    }
+   
     // console.log(formData)
 if (!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?.caption || !formData?.voice) {
   console.error("Error: fields are missing");
-  
+    toast('Please fill out all details')
   return;
 }
+ setLoading(true);
     const resp=await CreateInitialVideoRecord({
       title:formData.title,
       topic:formData.topic,
@@ -46,12 +52,13 @@ if (!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?
       caption:formData.caption,
       voice:formData.voice,
       uid:user?._id,
-      createdBy:user?.email
+      createdBy:user?.email,
+      credits:user?.credits
     })
    
     const result=await axios.post('/api/generate-video',{
       ...formData,
-      recordId:resp
+      recordId:resp,
     });
     console.log(result);
     setLoading(false)

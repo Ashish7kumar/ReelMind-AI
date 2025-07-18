@@ -19,7 +19,8 @@ export default defineSchema({
     audioUrl:v.optional(v.string()),
     captionJson:v.optional(v.any()),
     uid:v.id('users'),
-    createdBy:v.string()
+    createdBy:v.string(),
+    status:v.optional(v.string())
   })
 
 });

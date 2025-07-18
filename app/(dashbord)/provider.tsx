@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/app/(dashbord)/components/AppSidebar"
 import AppHeader from './components/AppHeader'
 import { useAuthContext } from '../themeProvider'
+import { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { redirect } from 'next/navigation'
@@ -29,6 +30,7 @@ const DasboardProvider = ({children}:{children:React.ReactNode}) => {
     <SidebarProvider>
 
       <AppSidebar/>
+       <Toaster position="top-center" reverseOrder={false} />
       <div className='w-full'><AppHeader/>
       <div className='p-10' >
         {children}</div></div>
