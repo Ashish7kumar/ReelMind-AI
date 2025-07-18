@@ -13,7 +13,7 @@ export default defineSchema({
     topic:v.string(),
     script:v.string(),
     videoStyle:v.string(),
-    caption:v.string(),
+    caption:v.any(),
     voice:v.string(),
     images:v.optional(v.any()),
     audioUrl:v.optional(v.string()),

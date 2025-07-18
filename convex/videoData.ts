@@ -7,7 +7,7 @@ export const CreateVideoData=mutation(
                 topic:v.string(),
                 script:v.string(),
                 videoStyle:v.string(),
-                caption:v.string(),
+                caption:v.any(),
                 voice:v.string(),
                 uid:v.id('users'),
                     createdBy:v.string()

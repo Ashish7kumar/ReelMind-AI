@@ -1,6 +1,7 @@
 import VideoStyle from "@/app/(dashbord)/create-new-video/components/VideoStyle";
 import { inngest } from "./client";
 import axios from "axios";
+import {createClient} from '@deepgram/sdk'
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },
   { event: "test/hello.world" },
@@ -34,6 +35,30 @@ export const GenerateVideoData=inngest.createFunction(
             return result.data.audio;
         }
       )
-      return GenerateAudioFile
+    const GenerateCaptions=await step.run(
+        "generateCaptions",
+        async()=>{
+            const deepgram=createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY)
+            const {result,error}=await deepgram.listen.prerecorded.transcribeUrl({
+                url:GenerateAudioFile,
+            },{
+                model:"nova-3",
+                
+            
+            }
+        
+        )
+        if(result==null)
+        {
+           return result;
+        }
+        console.log(result.results.channels[0].alternatives[0].words);
+        return result.results.channels[0].alternatives[0].words;
+            
+            }
+        
+    )  
+    return GenerateCaptions
     }
+    
 )

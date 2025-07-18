@@ -13,6 +13,7 @@ import { useAuthContext } from '@/app/themeProvider'
 import { api } from '@/convex/_generated/api'
 
 const CreateNewVideo = () => {
+  
   const [loading,setLoading]=useState(false);
     const [formData,setFormData]=useState<any>({});
     const context=useAuthContext();
@@ -31,9 +32,10 @@ const CreateNewVideo = () => {
   };
    const GenerateVideo=async ()=>{
     setLoading(true);
-    console.log(formData)
+    // console.log(formData)
 if (!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?.caption || !formData?.voice) {
   console.error("Error: fields are missing");
+  
   return;
 }
     const resp=await CreateInitialVideoRecord({
@@ -41,12 +43,12 @@ if (!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?
       topic:formData.topic,
       script:formData.script,
       videoStyle:formData.videoStyle,
-      caption:formData.voice,
+      caption:formData.caption,
       voice:formData.voice,
       uid:user?._id,
       createdBy:user?.email
     })
-    console.log(resp);
+   
     const result=await axios.post('/api/generate-video',{
       ...formData
     });
