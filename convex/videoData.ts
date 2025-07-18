@@ -21,7 +21,8 @@ export const CreateVideoData=mutation(
                 caption:args.caption,
                 voice:args.voice,
                 uid:args.uid,
-              createdBy:args.createdBy
+              createdBy:args.createdBy,
+              status:"pending"
             })
             return result
         }
@@ -38,8 +39,9 @@ export const UpdateVideoRecord=mutation({
         const result=await ctx.db.patch(args.recordId,{
             audioUrl:args.audioUrl,
             captionJson:args.captionJson,
-            images:args.images
-        })
+            images:args.images,
+            status:"completed"
+        });
         return result
     }
 })
