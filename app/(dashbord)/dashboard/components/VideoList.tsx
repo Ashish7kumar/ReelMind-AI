@@ -10,7 +10,7 @@ import { api } from '@/convex/_generated/api'
 import { useAuthContext } from '@/app/themeProvider'
 import { RefreshCcw } from 'lucide-react'
 import { query } from '@/convex/_generated/server'
-import { v } from 'convex/values'
+
 const VideoList = () => {
   const [videoList, setVideoList] = useState<any[]>([])
    const convex=useConvex();
@@ -62,7 +62,8 @@ const VideoList = () => {
   ):
   <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-10'>
    {videoList?.map((video, index) => (
-  <div key={index} className='relative text-white'>
+    <Link key={index} href={'/play-video/'+video?._id}>
+  <div  className='relative text-white cursor-pointer'>
     <div >
       {video?.status=='completed'?<Image src={video?.images[0]} alt={video?.title} width={500} height={500} className='w-full object-cover rounded-xl aspect-[2/3]'/>:<div className='aspect-[2/3] p-5 w-full  rounded-xl bg-purple-400 flex items-center justify-center gap-2 '><RefreshCcw className='animate-spin'/> <h2>Generating...</h2></div>}
    <div>
@@ -74,6 +75,7 @@ const VideoList = () => {
    </div>
     </div>
   </div>
+  </Link>
 ))}
 
   </div>
